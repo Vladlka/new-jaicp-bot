@@ -1,2 +1,12 @@
 <test>
+    <test-casa>
+        <q>/start</q>
+        <a state = "/Start"/>
+        <q>Привет</q>
+        <a state = "/Hello"/>
+        <q>Пока</q>
+        <a state = "/Bye"/>
+        <q>Как дела</q>
+        <a state = "/NoMatch"/>
+    </test-case>
 </test>    
