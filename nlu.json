@@ -135,7 +135,7 @@
     "patterns" : [ ],
     "priority" : 0
   }, {
-    "path" : "/погода",
+    "path" : "/климат",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
