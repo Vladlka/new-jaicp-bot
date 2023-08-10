@@ -24,7 +24,7 @@
   },
   "intents" : [ {
     "path" : "/Погода",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "какая сегодня погода в"
@@ -39,6 +39,40 @@
     "patterns" : [ ],
     "priority" : 0
   }, {
+    "path" : "/настроение",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "как дела?"
+    }, {
+      "text" : "у тебя всё хорошо?"
+    }, {
+      "text" : "как ты?"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/ярусский",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "hello"
+    }, {
+      "text" : "You see people looking"
+    }, {
+      "text" : "can be used to advertise"
+    }, {
+      "text" : "ABCDEFGHIKLMNOPQRSTVXYZ"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
     "path" : "/пока",
     "enabled" : true,
     "shared" : false,
@@ -46,8 +80,6 @@
       "text" : "пока"
     }, {
       "text" : "до свидания "
-    }, {
-      "text" : "до встречи"
     }, {
       "text" : "давай"
     }, {
