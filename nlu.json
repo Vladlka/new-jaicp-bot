@@ -23,22 +23,6 @@
     }
   },
   "intents" : [ {
-    "path" : "/Погода",
-    "enabled" : false,
-    "shared" : false,
-    "phrases" : [ {
-      "text" : "какая сегодня погода в"
-    }, {
-      "text" : "погода в"
-    }, {
-      "text" : "погода на завтра в"
-    } ],
-    "classificationRules" : {
-      "refs" : [ ]
-    },
-    "patterns" : [ ],
-    "priority" : 0
-  }, {
     "path" : "/настроение",
     "enabled" : true,
     "shared" : false,
@@ -73,6 +57,84 @@
     "patterns" : [ ],
     "priority" : 0
   }, {
+    "path" : "/LetsPlay",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "играть"
+    }, {
+      "text" : "хочу играть"
+    }, {
+      "text" : "давай поиграем"
+    }, {
+      "text" : "давай играть"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/computer",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "ты первый"
+    }, {
+      "text" : "ты"
+    }, {
+      "text" : "компьютер"
+    }, {
+      "text" : "чатбот"
+    }, {
+      "text" : "чат-бот"
+    }, {
+      "text" : "комп"
+    }, {
+      "text" : "бездушный кусок железа"
+    }, {
+      "text" : "не я"
+    }, {
+      "text" : "уступаю тебе"
+    }, {
+      "text" : "робот "
+    }, {
+      "text" : "терминатор"
+    }, {
+      "text" : "робокоп"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/endThisGame",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "стоп"
+    }, {
+      "text" : "надоело "
+    }, {
+      "text" : "я устал"
+    }, {
+      "text" : "устал"
+    }, {
+      "text" : "не хочу"
+    }, {
+      "text" : "сдаюсь"
+    }, {
+      "text" : "ты выиграл "
+    }, {
+      "text" : "признаю поражение"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
     "path" : "/пока",
     "enabled" : true,
     "shared" : false,
@@ -91,21 +153,19 @@
     "patterns" : [ ],
     "priority" : 0
   }, {
-    "path" : "/привет",
+    "path" : "/user",
     "enabled" : true,
     "shared" : false,
     "phrases" : [ {
-      "text" : "привет"
+      "text" : "человек "
     }, {
-      "text" : "Здравствуйте"
+      "text" : "пользователь"
     }, {
-      "text" : "Приветики "
+      "text" : "я"
     }, {
-      "text" : "Добрый день"
+      "text" : "не ты"
     }, {
-      "text" : "Доброе утро"
-    }, {
-      "text" : "Добрый вечер"
+      "text" : "я первый "
     } ],
     "classificationRules" : {
       "refs" : [ ]
