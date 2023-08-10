@@ -136,7 +136,7 @@
     "priority" : 0
   }, {
     "path" : "/климат",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "Хочу узнать погоду"
@@ -196,6 +196,10 @@
     "shared" : false,
     "phrases" : [ {
       "text" : "@mystem.geo"
+    }, {
+      "text" : "погода в @mystem.geo"
+    }, {
+      "text" : "прогноз погоды в @mystem.geo"
     } ],
     "classificationRules" : {
       "refs" : [ ]

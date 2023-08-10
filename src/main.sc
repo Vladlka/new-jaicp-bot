@@ -103,10 +103,6 @@ require: functions.js
 
 theme: /
 
-    state: Weather
-        intent!: /погода
-        a: Я могу сообщить вам текущую погоду в любом городе. Напишите город.
-
     state: GetWeather
         intent!: /geo
         script:
@@ -128,5 +124,5 @@ theme: /
 
     state: CatchAll || noContext=true
         event!: noMatch
-        a: Извините, я вас не понимаю, зато могу рассказать о погоде. Введите название города
+        a: Давай заного, только с городом
         go: /GetWeather
