@@ -26,6 +26,9 @@ theme: /
         intent!: /ярусский
         a: Извините, но я понимаю только русский язык...
         
+    state: Prog
+        intent!: /создатель
+        a: Ну уж точно не ты ,человечешка!!!
     
 require: responseCity.js
 require: city/city.sc

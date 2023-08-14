@@ -212,6 +212,22 @@
       "prompts" : [ "Введите город.", "В каком городе вы хотели бы узнать прогноз погоды?" ]
     } ],
     "priority" : 0
+  }, {
+    "path" : "/создатель",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "кто тебя создал?"
+    }, {
+      "text" : "кто твой создатель?"
+    }, {
+      "text" : "кто твой хозяин?"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
   } ],
   "entities" : [ {
     "entity" : {
