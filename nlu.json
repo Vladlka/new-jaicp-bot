@@ -24,7 +24,7 @@
   },
   "intents" : [ {
     "path" : "/настроение",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "как дела?"
@@ -76,7 +76,7 @@
     "priority" : 0
   }, {
     "path" : "/computer",
-    "enabled" : false,
+    "enabled" : true,
     "shared" : false,
     "phrases" : [ {
       "text" : "ты первый"
@@ -168,7 +168,7 @@
     "priority" : 0
   }, {
     "path" : "/user",
-    "enabled" : false,
+    "enabled" : true,
     "shared" : false,
     "phrases" : [ {
       "text" : "человек "
@@ -272,6 +272,8 @@
       "text" : "да"
     }, {
       "text" : "хочу"
+    }, {
+      "text" : "готов"
     } ],
     "classificationRules" : {
       "refs" : [ ]

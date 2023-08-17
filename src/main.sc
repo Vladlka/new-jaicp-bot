@@ -23,10 +23,6 @@ theme: /
         event!: match
         a: {{$context.intent.answer}}
         
-    state: Mood
-        intent!: /настроение
-        a: У меня всё отлично, а у вас?
-        
     state: Russia
         intent!: /ярусский
         a: Извините, но я понимаю только русский язык...
