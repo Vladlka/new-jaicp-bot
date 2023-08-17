@@ -132,7 +132,7 @@ theme: /
         # сгенерируем случайное число и перейдем в стейт /Проверка
         script:
             $session.number = $jsapi.random(100) + 1;
-            $reactions.answer("Загадано {{$session.number}}");
+            //$reactions.answer("Загадано {{$session.number}}");
             $reactions.transition("/Проверка");
 
     state: Проверка
