@@ -14,8 +14,7 @@ nlp:
         patterns: 0.2
     
 injector:
-    api_key: '654d7b294273de34813237e5771490f5'
     slotfilling:
-        maxSlotRetries: 2
+        maxSlotRetries: 3
         stopOnAnyIntent: false
         stopOnAnyIntentThreshold: 0.2

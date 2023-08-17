@@ -1,18 +1,23 @@
 require: slotfilling/slotFilling.sc
   module = sys.zb-common
+require: play.sc
+
 theme: /
     
     state: Start || modal = true
         q!: $regex</start>
-        a: Привет, я могу поотвечать на твои вопросы (пока так себе это делаю) или поиграть с тобой в города и погоду могу сказать.
+        a: Привет, я могу поотвечать на твои вопросы (пока так себе это делаю) или поиграть с тобой и погоду могу сказать.
         
     state: Bye
         intent!: /пока
         a: Пока пока
 
-    state: NoMatch
+    state: NoMatch || noContext = true
         event!: noMatch
-        a: Я не понял. Вы сказали: {{$request.query}}
+        random:
+            a: Я не понял.
+            a: Что вы имеете в виду?
+            a: Ничего не пойму
 
     state: Match
         event!: match
@@ -28,80 +33,18 @@ theme: /
         
     state: Prog
         intent!: /создатель
-        a: Ну уж точно не ты ,человечешка!!!
-    
-require: responseCity.js
-require: city/city.sc
-    module = sys.zb-common
-
-theme: /
-
-    state: LetsPlay || modal = true
+        random:
+            a: Ты его не знаешь и никогда не узнаешь.
+            a: Тот, кто создал ИИ в фильме терминатор.
+            a: Ну уж точно не ты ,человечишка!!!
+            
+    state: Play
         intent!: /LetsPlay
-        script:
-            // обнуление всех сессионных переменных
-            $session = {}
-            $client = {}
-            $temp = {}
-            $response = {}
-        a: Наконец-то достойный соперник, наша битва будет легендарной!!! Кто загадывает город: компьютер или пользователь?
-
-        state: User
-            intent: /user
-            a: Назовите город
-            script:
-                $session.keys = Object.keys($Cities);
-                $session.prevBotCity = 0;
-            go!: /LetsPlayCitiesGame
-
-        state: Computer
-            intent: /computer
-            script:
-                $session.keys = Object.keys($Cities);
-                var city = $Cities[chooseRandCityKey($session.keys)].value.name
-                $reactions.answer(city)
-                $session.prevBotCity = city
-
-            go!: /LetsPlayCitiesGame
-
-        state: LocalCatchAll
-            event: noMatch
-            a: Это не похоже на ответ. Попробуйте еще раз.
-
-    state: LetsPlayCitiesGame
-        state: CityPattern
-            q: * $City *
-            script:
-                // проверка на полное название города
-                if (isAFullNameOfCity()) {
-                    if (checkLetter($parseTree._City.name, $session.prevBotCity) == true
-                    || $session.prevBotCity == 0) {
-                    var removeCity = findByName($parseTree._City.name, $session.keys, $Cities)
-
-                    if (checkCity($parseTree, $session.keys, $Cities) == true) {
-                        $session.keys.splice(removeCity, 1)
-                        var key = responseCity($parseTree, $session.keys, $Cities)
-                        if (key == 0) {
-                            $reactions.answer("Я сдаюсь")
-                        } else {
-                            $reactions.answer($Cities[key].value.name)
-                            $session.prevBotCity = $Cities[key].value.name
-                            removeCity = findByName($Cities[key].value.name, $session.keys, $Cities)
-                            $session.keys.splice(removeCity, 1)
-                        }
-                    } else $reactions.answer("Этот город уже был назван")
-                    }
-                } else $reactions.answer("Используйте только полные названия городов")
-
-        state: NoMatch
-            event: noMatch
-            a: Я не знаю такого города. Попробуйте ввести другой город
-
-    state: EndGame
-        intent!: /endThisGame
-        a: Очень жаль! Если передумаешь — скажи "давай поиграем"
-
-
+        go!: /Старт/Start
+        
+    state: Over
+    
+    
 require: functions.js
 
 theme: /
@@ -129,3 +72,6 @@ theme: /
         event!: noMatch
         a: Давай заного, только с городом
         go: /GetWeather
+        
+    
+
