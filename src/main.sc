@@ -43,6 +43,9 @@ theme: /
         go!: /Старт/Start
         
     state: Over
+        random:
+            a: GG
+            a: Классно поиграли, зови ещё.
     
     
 require: functions.js

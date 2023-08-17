@@ -76,7 +76,7 @@
     "priority" : 0
   }, {
     "path" : "/computer",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "ты первый"
@@ -168,7 +168,7 @@
     "priority" : 0
   }, {
     "path" : "/user",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "человек "

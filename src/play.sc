@@ -22,6 +22,10 @@ theme: /
             $temp = {}
             $response = {}
         a: Кто загадывает город: компьютер или пользователь?
+        buttons:
+            "Компьютер" -> /Города/Computer
+            "Пользователь" -> /Города/User
+        
 
         state: User
             intent: /user
@@ -29,6 +33,9 @@ theme: /
             script:
                 $session.keys = Object.keys($Cities);
                 $session.prevBotCity = 0;
+            buttons:
+                "Начать заново" -> /Города
+                "Закончить игру" -> /Over
             go!: /LetsPlayCitiesGame
 
         state: Computer
@@ -38,14 +45,20 @@ theme: /
                 var city = $Cities[chooseRandCityKey($session.keys)].value.name
                 $reactions.answer(city)
                 $session.prevBotCity = city
-
+            buttons:
+                "Начать заново" -> /Города
+                "Закончить игру" -> /Over
             go!: /LetsPlayCitiesGame
 
         state: LocalCatchAll
             event: noMatch
             a: Это не похоже на ответ. Попробуйте еще раз.
+            buttons:
+                "Начать заново" -> /Города
+                "Закончить игру" -> /Over
 
     state: LetsPlayCitiesGame
+        
         state: CityPattern
             q: * $City *
             script:
@@ -69,10 +82,16 @@ theme: /
                     } else $reactions.answer("Этот город уже был назван")
                     }
                 } else $reactions.answer("Используйте только полные названия городов")
+            buttons:
+                "Начать заново" -> /Города
+                "Закончить игру" -> /Over
 
         state: NoMatch
             event: noMatch
             a: Я не знаю такого города. Попробуйте ввести другой город
+            buttons:
+                "Начать заново" -> /Города
+                "Закончить игру" -> /Over
 
     state: EndGame
         intent!: /endThisGame
@@ -81,9 +100,9 @@ theme: /
 
 
 
-        
-        
-        
+    
+    
+    
 require: slotfilling/slotFilling.sc
   module = sys.zb-common
 
@@ -95,13 +114,14 @@ theme: /
     state: Угадчисло
         q!: $regex</start>
         intent!: /Давай поиграем
-        a: Игра больше-меньше. Загадаю число от 0 до 100, ты будешь отгадывать. Начали!!!
+        a: Игра больше-меньше. Загадаю число от 0 до 100, ты будешь отгадывать. Как будешь готов, напиши.
         go!: /Угадчисло/Согласен?
         
         state: Согласен?
 
         state: Да
             intent: /Согласие
+            script: 
             go!: /Игра
 
         state: Нет
@@ -112,42 +132,12 @@ theme: /
         # сгенерируем случайное число и перейдем в стейт /Проверка
         script:
             $session.number = $jsapi.random(100) + 1;
-            # $reactions.answer("Загадано {{$session.number}}");
+            $reactions.answer("Загадано {{$session.number}}");
             $reactions.transition("/Проверка");
 
     state: Проверка
         q!: $regex</Проверка>
         intent: /Число
-        script:
-            
-            i++
-            if (i<5)
-                $reactions.transition("/Угадчисло/Согласен?");
-            else
-            {
-                var num = $parseTree._Number;
-            # проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
-                if (num == $session.number) {
-                    $reactions.answer("Ты выиграл! Хочешь еще раз?");
-                    $reactions.transition("/Угадчисло/Согласен?");
-                }
-                else
-                    if (num < $session.number) {
-                        $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
-                        //$reactions.transition("/ПопыткаII");
-                    }
-                    
-                    else {
-                        $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
-                        //$reactions.transition("/ПопыткаII");
-                    }
-            }
-            
-            
-                
-    state: ПопыткаII
-        q!: $regex</ПопыткаII>
-        a: Вторая попытка
         script:
             var num = $parseTree._Number;
             # проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
@@ -158,10 +148,17 @@ theme: /
             else
                 if (num < $session.number) {
                     $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
-                    $reactions.transition("/Угадчисло");
+                    //$reactions.transition("/ПопыткаII");
                 }
                 else {
                     $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
-                    $reactions.transition("/Угадчисло");
+                    //$reactions.transition("/ПопыткаII");
                 }
-           
+        buttons:
+                "Начать заново" -> /Угадчисло
+                "Закончить игру" -> /Over
+
+    #state: Луз
+        #a: Попытки закончились, ты проиграл!
+        #script:
+            #$reactions.transition("/Over");
