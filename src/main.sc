@@ -6,7 +6,7 @@ theme: /
     
     state: Start || modal = true
         q!: $regex</start>
-        a: Привет, я могу поотвечать на твои вопросы (пока так себе это делаю) или поиграть с тобой и погоду могу сказать.
+        a: Привет, я чат-бот. Умею немного, но хоть что-то, если хочешь узнать что я умею, спроси.
         
     state: Bye
         intent!: /пока
@@ -18,10 +18,10 @@ theme: /
             a: Я не понял.
             a: Что вы имеете в виду?
             a: Ничего не пойму
-
+            
     state: Match
         event!: match
-        a: {{$context.intent.answer}}
+        a: Щас настрою себя... Готов, говори человечишка.{{$context.intent.answer}}
         
     state: Russia
         intent!: /ярусский
@@ -42,6 +42,10 @@ theme: /
         random:
             a: GG
             a: Классно поиграли, зови ещё.
+            
+    state: Skills
+        intent!: /Умения
+        a: Я умею играть в игры "Города" и "Угадай число". Также есть связь с богами, они мне дают информацию о погоде в любом городе (ну почти).
     
     
 require: functions.js
@@ -66,6 +70,8 @@ theme: /
             }).catch(function (err) {
                 $reactions.answer("Что-то сервер барахлит. Не могу узнать погоду.");
             });
+
+                
 
     state: CatchAll || noContext=true
         event!: noMatch
