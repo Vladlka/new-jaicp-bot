@@ -10,6 +10,7 @@ theme: /Старт
         buttons:
             "Города" -> /Города
             "Угадай число" -> /Угадчисло
+            "100 спичек" -> /Стоспичек
 
 theme: /
     
@@ -158,7 +159,73 @@ theme: /
                 "Начать заново" -> /Угадчисло
                 "Закончить игру" -> /Over    
 
-    #state: Луз
-        #a: Попытки закончились, ты проиграл!
-        #script:
-            #$reactions.transition("/Over");
+
+theme: /
+    
+    state: Стоспичек
+        q!: $regex</start>
+        script:
+            $session.spichki = 100;
+            $response.replies = $response.replies || [];
+        a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку. Кто начитнает? 
+        buttons:
+            "Компьютер" -> /Comp
+            "Пользователь" -> /Use
+
+            
+    state: Use
+        intent: /Спички
+        script:
+            //$response.replies = $response.replies || [];
+            $reactions.answer("Осталось {{$session.spichki}}");
+        random:
+            a: Вводи число...
+            a: Твое число...
+        script: 
+            var a = $parseTree._Number;
+            if (a <= 10 && a != 0 && a>=1) {
+                $session.spichki -= a
+                if ($session.spichki = 0){
+                    $reactions.answer(selectRandomArg(["Ты победил.", "Я разбит, признаю поражение...", "Что ты наделал, глупец, я хотел спасти мир... "]));
+                    $reactions.transition("/Over");
+                }
+                    
+            $reactions.transition("/Comp");
+            }
+            else {
+                $reactions.answer(selectRandomArg(["Твое число может быть от 1 до 10!", "Ты правила вообще читал?", "Попробуй ещё раз."]));
+                $reactions.transition("/Use");
+                }
+                
+    state: Comp
+        script:
+            //$response.replies = $response.replies || [];
+            $reactions.answer("Осталось {{$session.spichki}}");
+            var b = 0;
+            if ($session.spichki > 20)
+             b = Math.random(1,10);
+            else 
+            {
+                if ($session.spichki <= 20 && $session.spichki > 10)
+                {
+                 for (var i = 1; i<=10;i++)
+                 {
+                     if (($session.spichki - i) == 11)
+                     {
+                         b = i;
+                         break;
+                     }
+                 }
+                }
+                else 
+                    b = $session.spichki;
+            }
+            $session.spichki -= b
+            if ($session.spichki = 0){
+                $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
+                $reactions.transition("/Over");
+                }
+            else $reactions.transition("/Use")
+            
+        
+            

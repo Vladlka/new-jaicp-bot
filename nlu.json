@@ -296,6 +296,30 @@
       "prompts" : [ "Я загадал число. Твоя догадка?", "Угадывай человечишка!!!" ]
     } ],
     "priority" : 0
+  }, {
+    "path" : "/Спички",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "@duckling.number"
+    }, {
+      "text" : "@duckling.number спичек"
+    }, {
+      "text" : "@duckling.number спичка"
+    }, {
+      "text" : "@duckling.number спички"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "slots" : [ {
+      "name" : "Spik",
+      "entity" : "duckling.number",
+      "required" : true,
+      "prompts" : [ ]
+    } ],
+    "priority" : 0
   } ],
   "entities" : [ {
     "entity" : {
