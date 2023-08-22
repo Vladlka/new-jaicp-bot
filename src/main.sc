@@ -74,7 +74,7 @@ theme: /
                 
 
     state: CatchAll || noContext=true
-        event!: noMatch
+        event: noMatch
         a: Давай заного, только с городом
         go: /GetWeather
         
