@@ -138,7 +138,6 @@ theme: /
             $reactions.transition("/Проверка");
 
     state: Проверка
-        #q: @duckling.number
         intent: /Число
         script:
             var num = $parseTree._Number;
@@ -163,7 +162,6 @@ theme: /
     
     state: Стоспичек
         a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку.
-        #go: /Wod
         script:
             $session.spichki = 100;
         buttons:
@@ -171,7 +169,6 @@ theme: /
             "Пользователь" -> /Wod
             
     state: Wod
-        #a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку.
         a: Выберай число.
         state: Oper
             q: (1/2/3/4/5/6/7/8/9/10) 
@@ -188,9 +185,8 @@ theme: /
                 if ($session.spichki > 20)
                 {
                     $temp.bot = $reactions.random(10) + 1;
-                    $reactions.answer('Бот выбрал {{$temp.bot}}');                    
                 }
-                else 
+                else if ($session.spichki >= 11)
                 {
                     switch ($session.spichki)
                     {
@@ -225,39 +221,10 @@ theme: /
                             $reactions.answer(selectRandomArg(["А ты это ловко придумал, я даже в начале непонял, глупец.", "Вот бы как в былые времена, взять 0..."]))
                             $temp.bot = $reactions.random(10) + 1;
                             break;
-                        case(10):
-                            $temp.bot = 10;
-                            break;
-                        case(9):
-                            $temp.bot = 9;
-                            break;
-                        case(8):
-                            $temp.bot = 8;
-                            break;
-                        case(7):
-                            $temp.bot = 7;
-                            break;
-                        case(6):
-                            $temp.bot = 6;
-                            break;
-                        case(5):
-                            $temp.bot = 5;
-                            break;
-                        case(4):
-                            $temp.bot = 4;
-                            break;
-                        case(3):
-                            $temp.bot = 3;
-                            break;
-                        case(2):
-                            $temp.bot = 2;
-                            break;
-                        case(1):
-                            $temp.bot = 1;
-                            break;
                     }
-                    $reactions.answer('Бот выбрал {{$temp.bot}}');
                 }
+                else $temp.bot = $session.spichki;   
+                $reactions.answer('Бот выбрал {{$temp.bot}}');
                 $session.spichki -= $temp.bot ;
                 $reactions.answer("Осталось {{$session.spichki}}.");
                 if ($session.spichki == 0)
@@ -270,9 +237,9 @@ theme: /
                 "Начать заново" -> /Стоспичек
                 "Закончить игру" -> /Over 
                 
-        state: NOP
-            event: noMatch
-            go!: /Wod
+    state: NOP
+        event: noMatch
+        go!: /Wod
             
             
                 
