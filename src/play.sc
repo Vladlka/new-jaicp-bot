@@ -10,7 +10,7 @@ theme: /Старт
         buttons:
             "Города" -> /Города
             "Угадай число" -> /Угадчисло
-            "100 спичек" -> /Wod
+            "100 спичек" -> /Стоспичек
 
 theme: /
     
@@ -162,18 +162,17 @@ theme: /
 theme: /
     
     state: Стоспичек
-        #q!: * (Сто/100) спичек *
         a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку.
-        go: /Wod
-        #buttons:
-            #"Компьютер" -> /Comp
-            #"Пользователь" -> /Use
-            
-    state: Wod
-        a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку.
-        a: Ты первый выберашь число.
+        #go: /Wod
         script:
             $session.spichki = 100;
+        buttons:
+            "Компьютер" -> /Comp
+            "Пользователь" -> /Wod
+            
+    state: Wod
+        #a: Правила игра: два игрока поочередно берут из общей кучи, которая составляет 100 спичек, от 1-10 штук, выигрывает тот, кто возьмёт последнюю спичку.
+        a: Выберай число.
         state: Oper
             q: (1/2/3/4/5/6/7/8/9/10) 
             script: 
@@ -185,60 +184,91 @@ theme: /
                     $reactions.answer(selectRandomArg(["Ты победил.", "Я разбит, признаю поражение...", "Что ты наделал, глупец, я хотел спасти мир... "]));
                     $reactions.transition("/Over");
                 }
-                if ($session.spichki)
+                $temp.bot = 0; 
+                if ($session.spichki > 20)
                 {
-                    $temp.bot = 0; 
-                    if ($session.spichki > 20)
-                    {
-                        $temp.bot = $reactions.random(10) + 1;
-                        $reactions.answer('Бот выбрал {{$temp.bot}}');
-                    }
-                    else 
-                    {
-                        switch ($session.spichki)
-                        {
-                            case(20):
-                                $temp.bot = 9;
-                                break;
-                            case(19):
-                                $temp.bot = 8;
-                                break;
-                            case(18):
-                                $temp.bot = 7;
-                                break;
-                            case(17):
-                                $temp.bot = 6;
-                                break;
-                            case(16):
-                                $temp.bot = 5;
-                                break;
-                            case(15):
-                                $temp.bot = 4;
-                                break;
-                            case(14):
-                                $temp.bot = 3;
-                                break;
-                            case(13):
-                                $temp.bot = 2;
-                                break;
-                            case(12):
-                                $temp.bot = 1;
-                                break;
-                            case(11):
-                                $reactions.answer(selectRandomArg(["А ты это ловко придумал, я даже в начале непонял, глупец.", "Вот бы как в былые времена, взять 0..."]))
-                                $temp.bot = $reactions.random(10) + 1;
-                                break;
-                            }
-                            $reactions.answer('Бот выбрал {{$temp.bot}}');
-                    }
-                    $session.spichki -= $temp.bot ;
-                    $reactions.answer("Осталось {{$session.spichki}}.");
-                    if ($session.spichki == 0)
-                    {
-                        $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
-                        $reactions.transition("/Over");
-                    }
+                    $temp.bot = $reactions.random(10) + 1;
+                    $reactions.answer('Бот выбрал {{$temp.bot}}');                    
                 }
+                else 
+                {
+                    switch ($session.spichki)
+                    {
+                        case(20):
+                            $temp.bot = 9;
+                            break;
+                        case(19):
+                            $temp.bot = 8;
+                            break;
+                        case(18):
+                            $temp.bot = 7;
+                            break;
+                        case(17):
+                            $temp.bot = 6;
+                            break;
+                        case(16):
+                            $temp.bot = 5;
+                            break;
+                        case(15):
+                            $temp.bot = 4;
+                            break;
+                        case(14):
+                            $temp.bot = 3;
+                            break;
+                        case(13):
+                            $temp.bot = 2;
+                            break;
+                        case(12):
+                            $temp.bot = 1;
+                            break;
+                        case(11):
+                            $reactions.answer(selectRandomArg(["А ты это ловко придумал, я даже в начале непонял, глупец.", "Вот бы как в былые времена, взять 0..."]))
+                            $temp.bot = $reactions.random(10) + 1;
+                            break;
+                        case(10):
+                            $temp.bot = 10;
+                            break;
+                        case(9):
+                            $temp.bot = 9;
+                            break;
+                        case(8):
+                            $temp.bot = 8;
+                            break;
+                        case(7):
+                            $temp.bot = 7;
+                            break;
+                        case(6):
+                            $temp.bot = 6;
+                            break;
+                        case(5):
+                            $temp.bot = 5;
+                            break;
+                        case(4):
+                            $temp.bot = 4;
+                            break;
+                        case(3):
+                            $temp.bot = 3;
+                            break;
+                        case(2):
+                            $temp.bot = 2;
+                            break;
+                        case(1):
+                            $temp.bot = 1;
+                            break;
+                    }
+                    $reactions.answer('Бот выбрал {{$temp.bot}}');
+                }
+                $session.spichki -= $temp.bot ;
+                $reactions.answer("Осталось {{$session.spichki}}.");
+                if ($session.spichki == 0)
+                {
+                    $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
+                    $reactions.transition("/Over");
+                }
+    
+            buttons:
+                "Начать заново" -> /Стоспичек
+                "Закончить игру" -> /Over 
                 
         state: NOP
             event: noMatch
@@ -248,42 +278,13 @@ theme: /
                 
     state: Comp
         script:
-            /*if (a <= 10 && a != 0 && a>=1) {
-                    $session.spichki -= a;
-                    if ($session.spichki = 0){
-                        $reactions.answer(selectRandomArg(["Ты победил.", "Я разбит, признаю поражение...", "Что ты наделал, глупец, я хотел спасти мир... "]));
-                        $reactions.transition("/Over");
-                    }
-                }
-                else 
-                    $reactions.answer(selectRandomArg(["Твое число может быть от 1 до 10!", "Ты правила вообще читал?", "Попробуй ещё раз."]));
-                    
-                var b = 0;
-                if ($session.spichki > 20){
-                 b = Math.random(1,10);
-                 $reactions.answer("Бот выбрал {{b}}");
-                }
-                else 
-                {
-                    if ($session.spichki <= 20 && $session.spichki > 10)
-                    {
-                     for (var i = 1; i<=10;i++)
-                     {
-                         if (($session.spichki - i) == 11)
-                         {
-                             b = i;
-                             break;
-                         }
-                     }
-                    }
-                    else 
-                        b = $session.spichki;
-                }
-                $session.spichki -= b
-                if ($session.spichki = 0)
-                {
-                    $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
-                    $reactions.transition("/Over");
+            $reactions.answer("Я хожу первый? Сам напросился")
+            $temp.com = $reactions.random(10) + 1;
+            $session.spichki -= $temp.com;
+            $reactions.answer("Бот взял {{$temp.com}}, осталось {{$session.spichki}}");
+            $reactions.transition("/Wod");
+        
+
 
             
         
