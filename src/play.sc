@@ -6,11 +6,17 @@ theme: /Старт
     
     state: Start || modal = true
         q!: $regex</start>
+        script:
+            $session = {}
+            $client = {}
+            $temp = {}
+            $response = {}
         a:Наконец-то достойный соперник, наша битва будет легендарной!!! Выбирай игру.
         buttons:
             "Города" -> /Города
             "Угадай число" -> /Угадчисло
             "100 спичек" -> /Стоспичек
+            "Кости" -> /Кости
 
 theme: /
     
@@ -223,15 +229,24 @@ theme: /
                             break;
                     }
                 }
-                else $temp.bot = $session.spichki;   
-                $reactions.answer('Бот выбрал {{$temp.bot}}');
-                $session.spichki -= $temp.bot ;
-                $reactions.answer("Осталось {{$session.spichki}}.");
-                if ($session.spichki == 0)
+                else $temp.bot = $session.spichki;
+                if ($temp.bot != 0) 
                 {
-                    $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
+                    $reactions.answer('Бот выбрал {{$temp.bot}}');
+                    $session.spichki -= $temp.bot;
+                    $reactions.answer("Осталось {{$session.spichki}}.");
+                    if ($session.spichki == 0)
+                    {
+                        $reactions.answer(selectRandomArg(["Победа компьютера.", "Человечество проиграло.", "Тебе меня не победить, человечишка!"]));
+                        $reactions.transition("/Over");
+                    }
+                }
+                else
+                {
+                    $reactions.answer(selectRandomArg(["Ты победил.", "Я разбит, признаю поражение...", "Что ты наделал, глупец, я хотел спасти мир... "]));
                     $reactions.transition("/Over");
                 }
+                
     
             buttons:
                 "Начать заново" -> /Стоспичек
@@ -253,6 +268,46 @@ theme: /
         
 
 
-            
+theme: / 
+    state: Кости
+        a: Игрок и компьютер бросают кубик два раза, у кого сумма чисел будет больше, тот и победил. Готов?
         
-            
+        state: Первыйход
+            q: (Да/Готов/Согласен)
+            script:
+                $reactions.answer('Твой ход.');
+                $session.kub1 = $reactions.random(6) + 1;
+                $reactions.answer('Первый кубик равен {{$session.kub1}}');
+                $reactions.timeout({interval: '2 seconds', targetState: '/Кости/Второйход'});
+        state: Второйход
+            script:
+                $session.kub2 = $reactions.random(6) + 1;
+                $reactions.answer('Второй кубик равен {{$session.kub2}}');
+                $reactions.timeout({interval: '2 seconds', targetState: '/Кости/Третийход'});
+        state: Третийход
+            script:
+                $session.sum1 = $session.kub1 + $session.kub2;
+                $reactions.answer('Сумма кубиков равна {{$session.sum1}}');
+                $reactions.timeout({interval: '2 seconds', targetState: '/Кости/Четвертыйход'});
+        state: Четвертыйход
+            script:
+                $reactions.answer('Мой ход.');
+                $temp.kub3 = $reactions.random(6) + 1;
+                $reactions.answer('Первый кубик равен {{$temp.kub3}}');
+                $reactions.timeout({interval: '2 seconds', targetState: '/Кости/Пятыйход'});
+        state: Пятыйход
+            script:
+                $temp.kub4 = $reactions.random(6) + 1;
+                $reactions.answer('Второй кубик равен {{$temp.kub4}}');
+                $reactions.timeout({interval: '2 seconds', targetState: '/Кости/Шестойход'});
+        state: Шестойход
+            script:
+                $session.sum2 = $temp.kub3 + $temp.kub4;
+                $reactions.answer('Сумма кубиков равна {{$session.sum2}}');
+                if ($session.sum1 > $session.sum2)
+                    $reactions.answer('Твоё число больше, ты победил.');
+                else 
+                    $reactions.answer('Моё число больше, я победил.');
+                $reactions.transition("/Over");
+                
+                

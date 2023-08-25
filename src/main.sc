@@ -78,5 +78,18 @@ theme: /
         a: Давай заного, только с городом
         go: /GetWeather
         
+        
+        
+        
+#require: money.js
+
+#theme: /
+    
+    #state: Ввод
+       # q!: (Курс волюты/)
+        #script:
+           # var money = [];
+           # money.splice(0,)
+        
     
 
