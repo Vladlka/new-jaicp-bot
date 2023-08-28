@@ -139,6 +139,8 @@ theme: /
         # сгенерируем случайное число и перейдем в стейт /Проверка
         script:
             $session.number = $jsapi.random(100) + 1;
+            $session.pop = 0;
+            $session.popit = 10;
             //$reactions.answer("Загадано {{$session.number}}");
             $reactions.transition("/Игра/Проверка");
 
@@ -146,17 +148,28 @@ theme: /
             intent: /Число
             script:
                 var num = $parseTree._Number;
-                # проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
-                if (num == $session.number) {
-                    $reactions.answer("Ты выиграл! Хочешь еще раз?");
-                    $reactions.transition("/Угадчисло/Согласен?");
-                }
-                else
-                    if (num < $session.number) {
-                        $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
+                $session.pop += 1
+                if ($session.pop < $session.popit)
+                {
+                    //проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
+                    if (num == $session.number) {
+                        $reactions.answer("Ты выиграл! Хочешь еще раз?");
+                        $reactions.transition("/Угадчисло/Согласен?");
                     }
-                    else 
-                        $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
+                    else
+                        if (num < $session.number) {
+                            $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
+                            $reactions.answer("Попытка номер " + $session.pop);
+                        }
+                        else {
+                            $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
+                            $reactions.answer("Попытка номер " + $session.pop);
+                        }
+                            
+                }
+                else 
+                    $reactions.answer("ОЙ, твои потытки кончились, ты проиграл")
+
                     
             buttons:
                     "Начать заново" -> /Угадчисло
