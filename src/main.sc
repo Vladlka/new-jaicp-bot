@@ -7,6 +7,8 @@ theme: /
     state: Start || modal = true
         q!: $regex</start>
         a: Привет, я чат-бот. Умею немного, но хоть что-то, если хочешь узнать что я умею, спроси.
+        buttons:
+            "443" -> /Ввод
         
     state: Bye
         intent!: /пока
@@ -81,15 +83,39 @@ theme: /
         
         
         
-#require: money.js
+require: money.js
 
-#theme: /
+theme: /
     
-    #state: Ввод
-       # q!: (Курс волюты/)
-        #script:
-           # var money = [];
-           # money.splice(0,)
-        
+    state: Ввод
+        InputNumber:
+            prompt = Какое количество единиц вы бы хотели конвертировать?
+            failureMessage = ["Не могли бы вы попробовать еще раз?", "Пожалуйста, введите число в диапазоне не отрицательное."]
+            minValue = 1
+            maxValue = 100000000000
+            varName = amount
+            then = /Изчего
     
+    state: Изчего
+        InputText:
+            varName = from
+            prompt = Введи название валюты из которой хочешь конвертировать, например: RUB - рубли, EUR - евро...
+            then = /Вочто
+        script:
+            //$session.from = $parseTree.text;
 
+    state: Вочто
+        InputText:
+            varName = to
+            prompt = Введи название валюты из которой хочешь конвертировать, например: RUB - рубли, EUR - евро...
+            then = /Конверт
+        script:
+            //$session.to = $parseTree.text;
+            
+    state: Конверт
+        script:
+            var result = moneyConvert($session.from, $session.to, $session.amount)
+            $reactions.answer("На сегодняшнее число " + result.data.date + " ты конвертировал из " + $session.from + " в "+ $session.to + " в количестве "+ $session.amount+ " единиц. В итоге получилось "+ result.data.result.toFixed(2))
+            $reactions.answer(toPrettyString(result))
+
+            

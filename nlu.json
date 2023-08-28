@@ -236,7 +236,7 @@
     "priority" : 0
   }, {
     "path" : "/Число",
-    "enabled" : true,
+    "enabled" : false,
     "shared" : false,
     "phrases" : [ {
       "text" : "@duckling.number"
@@ -319,6 +319,38 @@
       "required" : true,
       "prompts" : [ ]
     } ],
+    "priority" : 0
+  }, {
+    "path" : "/конверт",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "@duckling.number"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/Валюта",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Курс валют"
+    }, {
+      "text" : "Курс валюты"
+    }, {
+      "text" : "Валюта"
+    }, {
+      "text" : "Переведи рубли в евро"
+    }, {
+      "text" : "перевод денежных единиц "
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
     "priority" : 0
   } ],
   "entities" : [ {
