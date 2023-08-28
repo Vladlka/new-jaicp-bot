@@ -5,20 +5,14 @@ require: play.sc
 theme: /
     
     state: Start || modal = true
+        intent: /привет
         q!: $regex</start>
         a: Привет, я чат-бот. Умею немного, но хоть что-то, если хочешь узнать что я умею, спроси.
-        buttons:
-            "Игры" -> /Старт
-            "Погода" -> /GetWeather
-            "Конвертирование валют" -> /Количество
-    
+
     
     state: Naw
         a: Мы в главном меню, чего тебе нужно?
-        buttons:
-            "Игры" -> /Старт
-            "Погода" -> /GetWeather
-            "Конвертирование валют" -> /Количество
+
 
         
     state: Bye
@@ -33,8 +27,8 @@ theme: /
             a: Ничего не пойму
             
     state: Match
-        event!: match
-        a: Щас настрою себя... Готов, говори человечишка.{{$context.intent.answer}}
+        event: match
+        a: Щас настрою себя... Готов, говори человечишка.
         
     state: Russia
         intent!: /ярусский

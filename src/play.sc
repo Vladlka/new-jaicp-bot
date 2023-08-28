@@ -102,7 +102,7 @@ theme: /
 
     state: EndGame
         intent!: /endThisGame
-        a: Очень жаль! Если передумаешь — скажи "давай поиграем"
+        a: Очень жаль!
         go!: /Over
 
 
@@ -132,7 +132,7 @@ theme: /
 
         state: Нет
             intent: /Несогласие
-            a: Ну и ладно! Если передумаешь — скажи "давай поиграем"
+            a: Ну и ладно! 
             go!: /Over
             
     state: Игра
@@ -140,27 +140,27 @@ theme: /
         script:
             $session.number = $jsapi.random(100) + 1;
             //$reactions.answer("Загадано {{$session.number}}");
-            $reactions.transition("/Проверка");
+            $reactions.transition("/Игра/Проверка");
 
-    state: Проверка
-        intent: /Число
-        script:
-            var num = $parseTree._Number;
-            # проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
-            if (num == $session.number) {
-                $reactions.answer("Ты выиграл! Хочешь еще раз?");
-                $reactions.transition("/Угадчисло/Согласен?");
-            }
-            else
-                if (num < $session.number) {
-                    $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
+        state: Проверка
+            intent: /Число
+            script:
+                var num = $parseTree._Number;
+                # проверяем угадал ли пользователь загаданное число и выводим соответствующую реакцию
+                if (num == $session.number) {
+                    $reactions.answer("Ты выиграл! Хочешь еще раз?");
+                    $reactions.transition("/Угадчисло/Согласен?");
                 }
-                else 
-                    $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
-                
-        buttons:
-                "Начать заново" -> /Угадчисло
-                "Закончить игру" -> /Over    
+                else
+                    if (num < $session.number) {
+                        $reactions.answer(selectRandomArg(["Мое число больше!", "Бери выше", "Попробуй число больше"]));
+                    }
+                    else 
+                        $reactions.answer(selectRandomArg(["Мое число меньше!", "Подсказка: число меньше", "Дам тебе еще одну попытку! Мое число меньше."]));
+                    
+            buttons:
+                    "Начать заново" -> /Угадчисло
+                    "Закончить игру" -> /Over    
 
 
 theme: /

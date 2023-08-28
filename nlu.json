@@ -356,6 +356,24 @@
     },
     "patterns" : [ ],
     "priority" : 0
+  }, {
+    "path" : "/привет",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "привет"
+    }, {
+      "text" : "хай"
+    }, {
+      "text" : "здравствуй "
+    }, {
+      "text" : "здравствуйте"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
   } ],
   "entities" : [ {
     "entity" : {
