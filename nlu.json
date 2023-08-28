@@ -236,7 +236,7 @@
     "priority" : 0
   }, {
     "path" : "/Число",
-    "enabled" : false,
+    "enabled" : true,
     "shared" : false,
     "phrases" : [ {
       "text" : "@duckling.number"
@@ -346,6 +346,10 @@
       "text" : "Переведи рубли в евро"
     }, {
       "text" : "перевод денежных единиц "
+    }, {
+      "text" : "перевод валюты"
+    }, {
+      "text" : "конвертирование валюты"
     } ],
     "classificationRules" : {
       "refs" : [ ]
