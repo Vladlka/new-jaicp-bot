@@ -258,8 +258,6 @@ theme: /
                     $reactions.answer(selectRandomArg(["Ты победил.", "Я разбит, признаю поражение...", "Что ты наделал, глупец, я хотел спасти мир... "]));
                     $reactions.transition("/Over");
                 }
-                
-    
             buttons:
                 "Начать заново" -> /Стоспичек
                 "Закончить игру" -> /Over 
@@ -267,9 +265,7 @@ theme: /
     state: NOP
         event: noMatch
         go!: /Wod
-            
-            
-                
+   
     state: Comp
         script:
             $reactions.answer("Я хожу первый? Сам напросился")
